@@ -66,7 +66,7 @@ class Program
         
         connection.Open();
         var createTableCmd = connection.CreateCommand();
-        createTableCmd.CommandText = "CREATE TABLE Audit(AuditId INTEGER PRIMARY KEY AUTOINCREMENT, FileName VARCHAR(50) NOT NULL, UploadedDateTimeStamp INTEGER NOT NULL, NumberOfSuccessfullyImportedRecords INTEGER NOT NULL, NumberOfFailedRecords INTEGER NOT NULL, FailedRecordDetails VARCHAR(1000))";
+        createTableCmd.CommandText = "CREATE TABLE Audit(AuditId INTEGER PRIMARY KEY AUTOINCREMENT, FileName VARCHAR(50) NOT NULL, UploadedDateTimeStamp INTEGER NOT NULL, NumberOfSuccessfullyImportedRecords INTEGER, NumberOfFailedRecords INTEGER, FailedRecordDetails VARCHAR(1000))";
         createTableCmd.ExecuteNonQuery();
     }
 

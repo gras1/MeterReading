@@ -23,12 +23,14 @@ dotnet new classlib -f net6.0 -n Ensek.Net.MeterReading.Data
 4. in the Terminal window cd in to the Ensek.Net.MeterReading.Data folder, then type:
 dotnet add package Microsoft.Data.Sqlite
 dotnet add package Microsoft.Extensions.Options
+dotnet add package Ardalis.GuardClauses
 
 5. in the Terminal window from the repo root, type:
 dotnet new xunit -f net6.0 -n Ensek.Net.MeterReading.Data.Tests.Unit
 
 6. in the Terminal window cd in to the Ensek.Net.MeterReading.Data.Tests.Unit folder, then type:
 dotnet add package FluentAssertions
+dotnet add package FakeItEasy
 
 7. in the Terminal window from the repo root, type:
 dotnet new classlib -f net6.0 -n Ensek.Net.MeterReading.Dtos
@@ -71,3 +73,10 @@ dotnet add ./Ensek.Net.MeterReading.Api.Tests.Unit/Ensek.Net.MeterReading.Api.Te
 dotnet add ./Ensek.Net.MeterReading.Api.Tests.Integration/Ensek.Net.MeterReading.Api.Tests.Integration.csproj reference ./Ensek.Net.MeterReading.Api/Ensek.Net.MeterReading.Api.csproj
 
 
+16. Added a DatabaseOptions class that has a property for a ConnectionString
+
+17. Added a skeleton BaseRepository class, then added BaseRepositoryTests class that tests if a null IOptions is passed in to the constructor of BaseRepository that an ArgumentNullException is thrown, then I added the implementation. I then added a test that checks that if a ConnectionString is added to the fake/mock IOptions constructor parameter that it can be retrieved from the BaseRepository
+
+18. Created an IAuditRepository interface that defines two methods, one called CreateNewAuditRecord and the other called UpdateAuditRecord.
+
+19. Added a new class called AuditRepository that implements the interface and an AuditRepositoryTests class. Leave the default implementation of the methods in AuditRepository with ThrowNotImplementedException so that I could then start adding unit tests.
