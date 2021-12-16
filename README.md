@@ -95,5 +95,9 @@ dotnet add ./Ensek.Net.MeterReading.Api.Tests.Integration/Ensek.Net.MeterReading
 
 NB: I realised after the commit 1am 15/12/2021 that having a hard-coded SqliteConnection makes it impossible to unit test data access code, so I need to change this so that the SqliteConnection is passed in to the data access constructor/method. I can then use an in-memory defined SQLite database, the only drawback of this is I would need to re-create the database table structure every time
 
+21. Created a Guard clause extension method to check that if there were failed records that didn't import correctly that there is some description of what didn't work
 
+22. Created a custom exception to handle when an audit record doesn't exist when you try and update it
+
+23. Added in-memory SQLite database integration tests
 
