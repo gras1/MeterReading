@@ -4,10 +4,10 @@ public class AuditRepository : IAuditRepository
 {
     private readonly SqliteConnection _dbConnection;
 
-    public AuditRepository(SqliteConnection dbConnection)
+    public AuditRepository(IDbConnection dbConnection)
     {
         Guard.Against.Null(dbConnection, nameof(dbConnection));
-        _dbConnection = dbConnection;
+        _dbConnection = (SqliteConnection)dbConnection;
     }
 
     public int CreateNewAuditRecord(string fileName)
@@ -24,22 +24,22 @@ public class AuditRepository : IAuditRepository
 
         var stm = $"INSERT INTO [Audit] ([FileName], [UploadedDateTimeStamp]) VALUES ('{fileName}', strftime ('%s', 'now')); SELECT [AuditId] FROM [Audit] ORDER BY [AuditId] DESC LIMIT 1;";
 
-        using var cmd = new SqliteCommand(stm, _dbConnection);
+        using var insertCommand = new SqliteCommand(stm, _dbConnection);
 
-        var reader = cmd.ExecuteReader();
+        var reader = insertCommand.ExecuteReader();
         var id = 0;
         while (reader.Read())
         {
             Int32.TryParse(Convert.ToString(reader[0]), out id);
         }
-
+        insertCommand.Dispose();
         _dbConnection.Close();
         
         return id;
     }
 
     public void UpdateAuditRecord(int auditId, int numberOfSuccessfullyImportedRecords,
-        int numberOfFailedRecords, string failedRecordDetails)
+        int numberOfFailedRecords, string failedRecordDetails, bool leaveDbConnectionOpen = false)
     {
         Guard.Against.NegativeOrZero(auditId, nameof(auditId));
         Guard.Against.Negative(numberOfSuccessfullyImportedRecords, nameof(numberOfSuccessfullyImportedRecords));
@@ -75,7 +75,11 @@ public class AuditRepository : IAuditRepository
         using var updateCmd = new SqliteCommand(stm, _dbConnection);
 
         updateCmd.ExecuteNonQuery();
+        updateCmd.Dispose();
 
-        _dbConnection.Close();
+        if (!leaveDbConnectionOpen)
+        {
+            _dbConnection.Close();
+        }
     }
 }

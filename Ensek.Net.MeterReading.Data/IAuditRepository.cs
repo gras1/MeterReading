@@ -4,5 +4,6 @@ public interface IAuditRepository
 {
     int CreateNewAuditRecord(string fileName);
 
-    void UpdateAuditRecord(int auditId, int numberOfSuccessfullyImportedRecords, int numberOfFailedRecords, string failedRecordDetails);
+    void UpdateAuditRecord(int auditId, int numberOfSuccessfullyImportedRecords, int numberOfFailedRecords,
+        string failedRecordDetails, bool leaveDbConnectionOpen);
 }
