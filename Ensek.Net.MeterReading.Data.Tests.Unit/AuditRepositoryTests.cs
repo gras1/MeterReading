@@ -7,6 +7,12 @@ public class AuditRepositoryTests
     private const string CreateAuditTableSql = "CREATE TABLE Audit(AuditId INTEGER PRIMARY KEY AUTOINCREMENT, FileName VARCHAR(50) NOT NULL, UploadedDateTimeStamp INTEGER NOT NULL, NumberOfSuccessfullyImportedRecords INTEGER, NumberOfFailedRecords INTEGER, FailedRecordDetails VARCHAR(1000))";
 
     [Fact]
+    public void AuditRepository_Implements_IAuditRepository()
+    {
+        typeof(IAuditRepository).IsAssignableFrom(typeof(AuditRepository));
+    }
+
+    [Fact]
     public void Constructor_WhenIDbConnectionIsNull_ThrowsArgumentNullException()
     {
         Action act = () => new AuditRepository(default(SqliteConnection)!);

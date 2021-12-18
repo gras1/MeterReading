@@ -45,7 +45,7 @@ class Program
         var populateTableCmd = connection.CreateCommand();
         foreach (var account in accounts)
         {
-            populateTableCmd.CommandText = $"INSERT INTO Accounts VALUES ({account.AccountId}, '{account.FirstName}', '{account.LastName}')";
+            populateTableCmd.CommandText = $"INSERT INTO [Accounts] VALUES ({account.AccountId}, '{account.FirstName}', '{account.LastName}')";
             populateTableCmd.ExecuteNonQuery();
         }
     }

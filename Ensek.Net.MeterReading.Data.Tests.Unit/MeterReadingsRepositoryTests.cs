@@ -9,6 +9,12 @@ public class MeterReadingsRepositoryTests
     private const string CreateMeterReadingsTableSql = "CREATE TABLE MeterReadings(MeterReadingId INTEGER PRIMARY KEY AUTOINCREMENT, AccountId INTEGER NOT NULL, AuditId INTEGER NOT NULL, DateTime INTEGER NOT NULL, Value VARCHAR(5) NOT NULL, FOREIGN KEY(AccountId) REFERENCES Accounts(AccountId), FOREIGN KEY(AuditId) REFERENCES Audit(AuditId))";
 
     [Fact]
+    public void MeterReadingsRepository_Implements_IMeterReadingsRepository()
+    {
+        typeof(IMeterReadingsRepository).IsAssignableFrom(typeof(MeterReadingsRepository));
+    }
+
+    [Fact]
     public void Constructor_WhenIDbConnectionIsNull_ThrowsArgumentNullException()
     {
         Action act = () => new MeterReadingsRepository(default(SqliteConnection)!);
@@ -53,6 +59,89 @@ public class MeterReadingsRepositoryTests
         
         connection.Open();
 
+        CreateDatabaseTables(connection);
+
+        var meterReadingsRepository = new MeterReadingsRepository(connection);
+
+        Action act = () => meterReadingsRepository.CreateNewMeterReadingRecord(1, DateTime.Now, 99999, 1);
+
+        act.Should().Throw<MeterReadingRecordNotCreatedException>().WithMessage("AccountId 1 does not exist");
+    }
+
+    [Fact]
+    public void CreateNewMeterReadingRecord_WhenRecordAlreadyExists_ThrowsMeterReadingRecordNotCreatedException()
+    {
+        using var connection = new SqliteConnection(SqliteInMemoryConnectionString);
+        
+        connection.Open();
+
+        CreateDatabaseTables(connection);
+
+        var meterReadingDateTime = new DateTime(2021, 12, 17, 5, 55, 12);
+
+        var stm = "INSERT INTO [Accounts] VALUES (1, 'Test', 'Tester')";
+        using var insertAccountCmd = new SqliteCommand(stm, connection);
+        insertAccountCmd.ExecuteNonQuery();
+        insertAccountCmd.Dispose();
+        
+        stm = $"INSERT INTO [Audit] (FileName, UploadedDateTimeStamp) VALUES ('test.txt', strftime ('%s', 'now'))";
+        using var insertAuditCmd = new SqliteCommand(stm, connection);
+        insertAuditCmd.ExecuteNonQuery();
+        insertAuditCmd.Dispose();
+        
+        stm = $"INSERT INTO [MeterReadings](AccountId, AuditId, DateTime, Value) VALUES (1, 1, strftime ('%s', '{meterReadingDateTime.ToString("yyyy-MM-dd hh:mm:ss")}'), '00453')";
+        using var insertMeterReadingCmd = new SqliteCommand(stm, connection);
+        insertMeterReadingCmd.ExecuteNonQuery();
+        insertMeterReadingCmd.Dispose();
+
+        var meterReadingsRepository = new MeterReadingsRepository(connection);
+
+        Action act = () => meterReadingsRepository.CreateNewMeterReadingRecord(1, meterReadingDateTime, 453, 1);
+
+        act.Should().Throw<MeterReadingRecordNotCreatedException>().WithMessage($"Meter reading record already exists for 1 {meterReadingDateTime.ToString("yyyy-MM-dd hh:mm:ss")} 00453");
+    }
+
+    [Fact]
+    public void CreateNewMeterReadingRecord_WhenRecordDoesNotExist_InsertsRecord()
+    {
+        using var connection = new SqliteConnection(SqliteInMemoryConnectionString);
+        
+        connection.Open();
+
+        CreateDatabaseTables(connection);
+
+        var meterReadingDateTime = new DateTime(2021, 12, 17, 5, 55, 12);
+
+        var stm = "INSERT INTO [Accounts] VALUES (1, 'Test', 'Tester')";
+        using var insertAccountCmd = new SqliteCommand(stm, connection);
+        insertAccountCmd.ExecuteNonQuery();
+        insertAccountCmd.Dispose();
+        
+        stm = $"INSERT INTO [Audit] (FileName, UploadedDateTimeStamp) VALUES ('test.txt', strftime ('%s', 'now'))";
+        using var insertAuditCmd = new SqliteCommand(stm, connection);
+        insertAuditCmd.ExecuteNonQuery();
+        insertAuditCmd.Dispose();
+
+        var meterReadingsRepository = new MeterReadingsRepository(connection);
+
+        meterReadingsRepository.CreateNewMeterReadingRecord(1, meterReadingDateTime, 453, 1, true);
+
+        stm = $"SELECT COUNT([MeterReadingId]) FROM [MeterReadings] WHERE [AccountId] = 1 AND [DateTime] = strftime ('%s', '{meterReadingDateTime.ToString("yyyy-MM-dd hh:mm:ss")}') AND [Value] = '00453';";
+        using var meterReadingExistsCmd = new SqliteCommand(stm, connection);
+        var reader = meterReadingExistsCmd.ExecuteReader();
+        var meterReadingCount = 0;
+        while (reader.Read())
+        {
+            Int32.TryParse(Convert.ToString(reader[0]), out meterReadingCount);
+        }
+        meterReadingExistsCmd.Dispose();
+        reader.Close();
+        connection.Close();
+        meterReadingCount.Should().Be(1);
+    }
+
+    private void CreateDatabaseTables(SqliteConnection connection)
+    {
         using var createAuditTableCommand = connection.CreateCommand();
         createAuditTableCommand.CommandText = CreateAuditTableSql;
         createAuditTableCommand.ExecuteNonQuery();
@@ -62,135 +151,5 @@ public class MeterReadingsRepositoryTests
         using var createMeterReadingsTableCommand = connection.CreateCommand();
         createMeterReadingsTableCommand.CommandText = CreateMeterReadingsTableSql;
         createMeterReadingsTableCommand.ExecuteNonQuery();
-
-        var meterReadingsRepository = new MeterReadingsRepository(connection);
-
-        Action act = () => meterReadingsRepository.CreateNewMeterReadingRecord(1, DateTime.Now, 99999, 1);
-
-        act.Should().Throw<MeterReadingRecordNotCreatedException>().WithMessage("AccountId 1 does not exist");
     }
-    
-    // [Fact]
-    // public void CreateNewAuditRecord_WhenFilenameIsEmpty_ThrowsArgumentException()
-    // {
-    //     var auditRepository = new AuditRepository(new SqliteConnection());
-
-    //     Action act = () => auditRepository.CreateNewAuditRecord(string.Empty);
-
-    //     act.Should().Throw<ArgumentException>().WithMessage("Required input fileName was empty. (Parameter 'fileName')");
-    // }
-    
-    // [Fact]
-    // public void UpdateAuditRecord_WhenAuditIdIsZero_ThrowsArgumentException()
-    // {
-    //     var auditRepository = new AuditRepository(new SqliteConnection());
-
-    //     Action act = () => auditRepository.UpdateAuditRecord(0, 5, 0, string.Empty);
-
-    //     act.Should().Throw<ArgumentException>().WithMessage("Required input auditId cannot be zero or negative. (Parameter 'auditId')");
-    // }
-    
-    // [Fact]
-    // public void UpdateAuditRecord_WhenNumberOfSuccessfullyImportedRecordsIsNegative_ThrowsArgumentException()
-    // {
-    //     var auditRepository = new AuditRepository(new SqliteConnection());
-
-    //     Action act = () => auditRepository.UpdateAuditRecord(5, -1, 0, string.Empty);
-
-    //     act.Should().Throw<ArgumentException>().WithMessage("Required input numberOfSuccessfullyImportedRecords cannot be negative. (Parameter 'numberOfSuccessfullyImportedRecords')");
-    // }
-    
-    // [Fact]
-    // public void UpdateAuditRecord_WhenNumberOfFailedRecordsIsNegative_ThrowsArgumentException()
-    // {
-    //     var auditRepository = new AuditRepository(new SqliteConnection());
-
-    //     Action act = () => auditRepository.UpdateAuditRecord(5, 0, -1, string.Empty);
-
-    //     act.Should().Throw<ArgumentException>().WithMessage("Required input numberOfFailedRecords cannot be negative. (Parameter 'numberOfFailedRecords')");
-    // }
-    
-    // [Fact]
-    // public void UpdateAuditRecord_WhenNumberOfFailedRecordsIsGreaterThanZeroAndFailedRecordDetailsIsEmpty_ThrowsArgumentException()
-    // {
-    //     var auditRepository = new AuditRepository(new SqliteConnection());
-
-    //     Action act = () => auditRepository.UpdateAuditRecord(5, 0, 1, string.Empty);
-
-    //     act.Should().Throw<ArgumentException>().WithMessage("input should not be null or white space (Parameter 'failedRecordDetails')");
-    // }
-
-    // [Fact]
-    // public void CreateNewAuditRecord_WithNonEmptyFilename_ReturnsNonZeroAuditId()
-    // {
-    //     using var connection = new SqliteConnection(SqliteInMemoryConnectionString);
-        
-    //     connection.Open();
-
-    //     using var command = connection.CreateCommand();
-    //     command.CommandText = CreateAuditTableSql;
-    //     command.ExecuteNonQuery();
-
-    //     var auditRepository = new AuditRepository(connection);
-
-    //     var auditId = auditRepository.CreateNewAuditRecord("Hello.txt");
-
-    //     auditId.Should().BeGreaterThan(0);
-    // }
-    
-    // [Fact]
-    // public void UpdateAuditRecord_WithNonExistantAuditId_ThrowsAuditRecordNotFoundException()
-    // {
-    //     using var connection = new SqliteConnection(SqliteInMemoryConnectionString);
-        
-    //     connection.Open();
-
-    //     using var command = connection.CreateCommand();
-    //     command.CommandText = CreateAuditTableSql;
-    //     command.ExecuteNonQuery();
-
-    //     var auditRepository = new AuditRepository(connection);
-
-    //     Action act = () => auditRepository.UpdateAuditRecord(1, 1, 0, string.Empty);
-
-    //     act.Should().Throw<AuditRecordNotFoundException>().WithMessage("AuditId 1 not found");
-    // }
-    
-    // [Fact]
-    // public void UpdateAuditRecord_WithExistingAuditRecord_UpdatesAuditRecordSuccessfully()
-    // {
-    //     using var connection = new SqliteConnection(SqliteInMemoryConnectionString);
-        
-    //     connection.Open();
-
-    //     using var createAuditTableCommand = connection.CreateCommand();
-    //     createAuditTableCommand.CommandText = CreateAuditTableSql;
-    //     createAuditTableCommand.ExecuteNonQuery();
-
-    //     var stm = $"INSERT INTO [Audit] ([FileName], [UploadedDateTimeStamp]) VALUES ('Hello.txt', strftime ('%s', 'now'));";
-
-    //     using var insertCommand = new SqliteCommand(stm, connection);
-
-    //     insertCommand.ExecuteNonQuery();
-    //     insertCommand.Dispose();
-
-    //     var auditRepository = new AuditRepository(connection);
-
-    //     auditRepository.UpdateAuditRecord(1, 1, 0, string.Empty, true);
-
-    //     stm = $"SELECT [NumberOfSuccessfullyImportedRecords] FROM [Audit] WHERE [AuditId] = 1;";
-
-    //     using var selectCmd = new SqliteCommand(stm, connection);
-
-    //     var reader = selectCmd.ExecuteReader();
-    //     var numberOfSuccessfullyImportedRecords = 0;
-    //     while (reader.Read())
-    //     {
-    //         Int32.TryParse(Convert.ToString(reader[0]), out numberOfSuccessfullyImportedRecords);
-    //     }
-    //     selectCmd.Dispose();
-    //     connection.Close();
-        
-    //     numberOfSuccessfullyImportedRecords.Should().Be(1);
-    // }
 }
