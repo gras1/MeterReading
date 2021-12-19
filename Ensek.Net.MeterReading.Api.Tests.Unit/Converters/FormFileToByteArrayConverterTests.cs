@@ -29,7 +29,7 @@ public class FormFileToByteArrayConverterTests
     }
     
     [Fact]
-    public void Convert_WithNullIFormFile_ThrowsFormFileToByteArrayConverterException()
+    public void Convert_WhenIFormFileIsNull_ThrowsFormFileToByteArrayConverterException()
     {
         var formFileToByteArrayConverter = new FormFileToByteArrayConverter();
         
@@ -39,7 +39,7 @@ public class FormFileToByteArrayConverterTests
     }
     
     [Fact]
-    public void Convert_WithNoContentIFormFile_ThrowsFormFileToByteArrayConverterException()
+    public void Convert_WhenIFormFileHasNoContent_ThrowsFormFileToByteArrayConverterException()
     {
         var content = "";
         var fileName = "test.csv";

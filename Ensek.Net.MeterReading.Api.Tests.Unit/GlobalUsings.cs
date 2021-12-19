@@ -17,3 +17,4 @@ global using Microsoft.AspNetCore.Http;
 global using System.IO;
 global using System.Threading.Tasks;
 global using Ensek.Net.MeterReading.Api.Models;
+global using Microsoft.AspNetCore.Mvc;
