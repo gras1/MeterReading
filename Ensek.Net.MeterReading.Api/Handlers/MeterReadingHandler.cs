@@ -31,7 +31,9 @@ public class MeterReadingHandler : IMeterReadingHandler
         string failedRecordDetails = null!;
         if (uploadResponse.ImportFailureReasons != null && uploadResponse.ImportFailureReasons.Count > 0)
         {
-            failedRecordDetails = string.Join(",", uploadResponse.ImportFailureReasons.SelectMany(m => m.FailureReason!).ToList()!);
+            var failureReasons = (from ifr in uploadResponse.ImportFailureReasons
+                                  select ifr.FailureReason).ToList();
+            failedRecordDetails = string.Join(",", failureReasons);
         }
         
         _auditRepository.UpdateAuditRecord(importFile.AuditId, uploadResponse.NumberOfRecordsSuccessfullyImported,
