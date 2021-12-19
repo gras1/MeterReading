@@ -70,7 +70,7 @@ public class AuditRepository : IAuditRepository
             throw new AuditRecordNotFoundException($"AuditId {auditId} not found");
         }
 
-        stm = $"UPDATE [Audit] SET [NumberOfSuccessfullyImportedRecords] = {numberOfSuccessfullyImportedRecords}, [NumberOfFailedRecords] = {numberOfFailedRecords}, [FailedRecordDetails] = '{failedRecordDetails}' WHERE [AuditId] = {auditId};";
+        stm = $"UPDATE [Audit] SET [NumberOfSuccessfullyImportedRecords] = {numberOfSuccessfullyImportedRecords}, [NumberOfFailedRecords] = {numberOfFailedRecords}, [FailedRecordDetails] = '{failedRecordDetails.Replace("'", "''")}' WHERE [AuditId] = {auditId};";
 
         using var updateCmd = new SqliteCommand(stm, _dbConnection);
 

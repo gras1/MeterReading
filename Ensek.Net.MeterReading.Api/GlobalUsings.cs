@@ -13,3 +13,6 @@ global using System.Globalization;
 global using NotVisualBasic.FileIO;
 global using Ensek.Net.MeterReading.Api.Handlers;
 global using Ensek.Net.MeterReading.Api.Converters;
+global using Microsoft.OpenApi.Models;
+global using System.Data;
+global using Microsoft.Data.Sqlite;
