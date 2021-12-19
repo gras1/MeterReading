@@ -12,6 +12,15 @@ public class FileProcessor : IFileProcessor
 
     public ImportFile Process(string meterReadingFileName, byte[] meterReadingFileBytes)
     {
+        if (string.IsNullOrWhiteSpace(meterReadingFileName))
+        {
+            throw new FileProcessorException(nameof(meterReadingFileName) + " cannot be null or whitespace");
+        }
+        else if (meterReadingFileBytes.Length == 0)
+        {
+            throw new FileProcessorException(nameof(meterReadingFileBytes) + " cannot be empty");
+        }
+
         var importFileAudits = new List<ImportFileAudit>();
 
         using var stream = new MemoryStream(meterReadingFileBytes);
@@ -28,7 +37,15 @@ public class FileProcessor : IFileProcessor
         while (!parser.EndOfData)
         {
             var csvLine = parser.ReadFields();
-            var importFileAudit = new ImportFileAudit(csvLine[0], csvLine[1], csvLine[2]);
+            ImportFileAudit importFileAudit;
+            try
+            {
+                importFileAudit = new ImportFileAudit(csvLine[0], csvLine[1], csvLine[2]);
+            }
+            catch (Exception ex)
+            {
+                throw new FileProcessorException($"An error occurred whilst trying to create an ImportFileAudit from {meterReadingFileName}", ex);
+            }
             importFileAudits.Add(importFileAudit);
         }
 

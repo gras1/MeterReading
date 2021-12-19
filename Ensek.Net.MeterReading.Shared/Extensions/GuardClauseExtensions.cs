@@ -1,4 +1,4 @@
-namespace Ensek.Net.MeterReading.Data;
+namespace Ensek.Net.MeterReading.Shared.Extensions;
 
 public static class GuardClauseExtensions
 {

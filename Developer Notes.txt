@@ -23,76 +23,80 @@ dotnet add package FluentAssertions
 dotnet add package FakeItEasy
 
 7. in the Terminal window from the repo root, type:
-dotnet new classlib -f net6.0 -n Ensek.Net.MeterReading.Dtos
+dotnet new classlib -f net6.0 -n Ensek.Net.MeterReading.Shared
 
-8. in the Terminal window from the repo root, type:
+8. in the Terminal window cd in to the Ensek.Net.MeterReading.Shared folder, then type:
+dotnet add package Ardalis.GuardClauses
+
+9. in the Terminal window from the repo root, type:
 dotnet new webapi -f net6.0 -n Ensek.Net.MeterReading.Api
 
-9. in the Terminal window cd in to the Ensek.Net.MeterReading.Api folder, then type:
+10. in the Terminal window cd in to the Ensek.Net.MeterReading.Api folder, then type:
 dotnet add package Ardalis.GuardClauses
 dotnet add package CsvTextFieldParser
 
-10. in the Terminal window from the repo root, type:
+11. in the Terminal window from the repo root, type:
 dotnet new xunit -f net6.0 -n Ensek.Net.MeterReading.Api.Tests.Unit
 
-11. in the Terminal window cd in to the Ensek.Net.MeterReading.Api.Tests.Unit folder, then type:
+12. in the Terminal window cd in to the Ensek.Net.MeterReading.Api.Tests.Unit folder, then type:
 dotnet add package FluentAssertions
 dotnet add package FakeItEasy
 
-12. in the Terminal window from the repo root, type:
+13. in the Terminal window from the repo root, type:
 dotnet new xunit -f net6.0 -n Ensek.Net.MeterReading.Api.Tests.Integration
 
-13. in the Terminal window cd in to the Ensek.Net.MeterReading.Api.Tests.Integration folder, then type:
+14. in the Terminal window cd in to the Ensek.Net.MeterReading.Api.Tests.Integration folder, then type:
 dotnet add package FluentAssertions
 dotnet add package Xunit.Gherkin.Quick
 
-14. create a solution file, in the Terminal window from the repo root, type:
+15. create a solution file, in the Terminal window from the repo root, type:
 dotnet new sln --name Ensek.Net.MeterReading.sln
 
-15. add project references to the solution, in the Terminal window from the repo root, type:
+16. add project references to the solution, in the Terminal window from the repo root, type:
 dotnet sln add ./Ensek.Net.MeterReading.DbSetup/Ensek.Net.MeterReading.DbSetup.csproj
 dotnet sln add ./Ensek.Net.MeterReading.Data/Ensek.Net.MeterReading.Data.csproj
 dotnet sln add ./Ensek.Net.MeterReading.Data.Tests.Unit/Ensek.Net.MeterReading.Data.Tests.Unit.csproj
-dotnet sln add ./Ensek.Net.MeterReading.Dtos/Ensek.Net.MeterReading.Dtos.csproj
+dotnet sln add ./Ensek.Net.MeterReading.Shared/Ensek.Net.MeterReading.Shared.csproj
 dotnet sln add ./Ensek.Net.MeterReading.Api/Ensek.Net.MeterReading.Api.csproj
 dotnet sln add ./Ensek.Net.MeterReading.Api.Tests.Unit/Ensek.Net.MeterReading.Api.Tests.Unit.csproj
 dotnet sln add ./Ensek.Net.MeterReading.Api.Tests.Integration/Ensek.Net.MeterReading.Api.Tests.Integration.csproj
 
-16. add the inter project references, in the Terminal window from the repo root, type:
-dotnet add ./Ensek.Net.MeterReading.Data/Ensek.Net.MeterReading.Data.csproj reference ./Ensek.Net.MeterReading.Dtos/Ensek.Net.MeterReading.Dtos.csproj
+17. add the inter project references, in the Terminal window from the repo root, type:
+dotnet add ./Ensek.Net.MeterReading.Data/Ensek.Net.MeterReading.Data.csproj reference ./Ensek.Net.MeterReading.Shared/Ensek.Net.MeterReading.Shared.csproj
 dotnet add ./Ensek.Net.MeterReading.Data.Tests.Unit/Ensek.Net.MeterReading.Data.Tests.Unit.csproj reference ./Ensek.Net.MeterReading.Data/Ensek.Net.MeterReading.Data.csproj
-dotnet add ./Ensek.Net.MeterReading.Data.Tests.Unit/Ensek.Net.MeterReading.Data.Tests.Unit.csproj reference ./Ensek.Net.MeterReading.Dtos/Ensek.Net.MeterReading.Dtos.csproj
-dotnet add ./Ensek.Net.MeterReading.Api/Ensek.Net.MeterReading.Api.csproj reference ./Ensek.Net.MeterReading.Dtos/Ensek.Net.MeterReading.Dtos.csproj
+dotnet add ./Ensek.Net.MeterReading.Data.Tests.Unit/Ensek.Net.MeterReading.Data.Tests.Unit.csproj reference ./Ensek.Net.MeterReading.Shared/Ensek.Net.MeterReading.Shared.csproj
+dotnet add ./Ensek.Net.MeterReading.Api/Ensek.Net.MeterReading.Api.csproj reference ./Ensek.Net.MeterReading.Shared/Ensek.Net.MeterReading.Shared.csproj
 dotnet add ./Ensek.Net.MeterReading.Api.Tests.Unit/Ensek.Net.MeterReading.Api.Tests.Unit.csproj reference ./Ensek.Net.MeterReading.Data/Ensek.Net.MeterReading.Data.csproj
 dotnet add ./Ensek.Net.MeterReading.Api.Tests.Unit/Ensek.Net.MeterReading.Api.Tests.Unit.csproj reference ./Ensek.Net.MeterReading.Api/Ensek.Net.MeterReading.Api.csproj
-dotnet add ./Ensek.Net.MeterReading.Api.Tests.Unit/Ensek.Net.MeterReading.Api.Tests.Unit.csproj reference ./Ensek.Net.MeterReading.Dtos/Ensek.Net.MeterReading.Dtos.csproj
+dotnet add ./Ensek.Net.MeterReading.Api.Tests.Unit/Ensek.Net.MeterReading.Api.Tests.Unit.csproj reference ./Ensek.Net.MeterReading.Shared/Ensek.Net.MeterReading.Shared.csproj
 dotnet add ./Ensek.Net.MeterReading.Api.Tests.Integration/Ensek.Net.MeterReading.Api.Tests.Integration.csproj reference ./Ensek.Net.MeterReading.Api/Ensek.Net.MeterReading.Api.csproj
 
-17. Added a DatabaseOptions class that has a property for a ConnectionString
+18. Added a DatabaseOptions class that has a property for a ConnectionString
 
-18. Added a skeleton BaseRepository class, then added BaseRepositoryTests class that tests if a null IOptions is passed in to the constructor of BaseRepository that an ArgumentNullException is thrown, then I added the implementation. I then added a test that checks that if a ConnectionString is added to the fake/mock IOptions constructor parameter that it can be retrieved from the BaseRepository
+19. Added a skeleton BaseRepository class, then added BaseRepositoryTests class that tests if a null IOptions is passed in to the constructor of BaseRepository that an ArgumentNullException is thrown, then I added the implementation. I then added a test that checks that if a ConnectionString is added to the fake/mock IOptions constructor parameter that it can be retrieved from the BaseRepository
 
-19. Created an IAuditRepository interface that defines two methods, one called CreateNewAuditRecord and the other called UpdateAuditRecord.
+20. Created an IAuditRepository interface that defines two methods, one called CreateNewAuditRecord and the other called UpdateAuditRecord.
 
-20. Added a new class called AuditRepository that implements the interface and an AuditRepositoryTests class. Leave the default implementation of the methods in AuditRepository with ThrowNotImplementedException so that I could then start adding unit tests.
+21. Added a new class called AuditRepository that implements the interface and an AuditRepositoryTests class. Leave the default implementation of the methods in AuditRepository with ThrowNotImplementedException so that I could then start adding unit tests.
 
 NB: I realised after the commit 1am 15/12/2021 that I would have to be creative unit testing the AuditRepository, in the end I decided to unit test it with an in-memory defined SQLite database, the only drawback of this is I would need to re-create the database table structure in each unit test and leave the SqliteConnection open when calling AuditRepository
 
-21. Created a Guard clause extension method to check that if there were failed records that didn't import correctly that there is some description of what didn't work
+22. Created a Guard clause extension method to check that if there were failed records that didn't import correctly that there is some description of what didn't work
 
-22. Created a custom exception to handle when an audit record doesn't exist when you try and update it
+23. Created a custom exception to handle when an audit record doesn't exist when you try and update it
 
-23. Created a custom exception when a meter reading record could not be created
+24. Created a custom exception when a meter reading record could not be created
 
-24. It has been a long time since I last processed an uploaded file in an MVC controller - in .NET Framework I used HttpPostedFile but that class doesn't exist in .NET 6, instead it has been replaced with IFormFile. I had some experience using TextFieldParser which was in the .NET Framework Microsoft.VisualBasic assembly, clearly this is unsuitable for .NET 6, so I found a nuget package called CsvTextFieldParser (that is still maintained that reverse engineered TextFieldParser), which I will use to process the csv file.
+25. It has been a long time since I last processed an uploaded file in an MVC controller - in .NET Framework I used HttpPostedFile but that class doesn't exist in .NET 6, instead it has been replaced with IFormFile. I had some experience using TextFieldParser which was in the .NET Framework Microsoft.VisualBasic assembly, clearly this is unsuitable for .NET 6, so I found a nuget package called CsvTextFieldParser (that is still maintained that reverse engineered TextFieldParser), which I will use to process the csv file.
 
-25. Originally, the Process method of FileProcessor took a single parameter of a FileStream but this proved a nightmare to test so I altered this method to accept two parameters, the file name and the byte array repesentation of the cs file
+26. Originally, the Process method of FileProcessor took a single parameter of a FileStream but this proved a nightmare to test so I altered this method to accept two parameters, the file name and the byte array repesentation of the cs file
+
+27. Restructed the solution removing the Dtos class library project and adding a Shared class library project. I created Dtos, Exceptions and Extensions folders and moved those classes in to the folders.
 
 //TODO:
 //Unit test MeterReadingFileUploadController
-//Unit test FormFileToByteArrayConverter
 //Add Dependency Injection
 //Check code coverage
+//Check swagger documentation
 //Add Api integration tests?
 //Somke tests using Postman?
-//Check swagger documentation

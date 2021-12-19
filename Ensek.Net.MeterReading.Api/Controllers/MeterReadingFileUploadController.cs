@@ -20,8 +20,22 @@ public class MeterReadingFileUploadController : ControllerBase
             return new BadRequestResult();
         }
 
-        var uploadResponse = await _meterReadingHandler.HandleMeterReadings(meterReadingFile);
-
-        return new OkObjectResult(uploadResponse);
+        try
+        {
+            return new OkObjectResult(await _meterReadingHandler.HandleMeterReadings(meterReadingFile));
+        }
+        catch (FormFileToByteArrayConverterException)
+        {
+            return new BadRequestResult();
+        }
+        catch (FileProcessorException)
+        {
+            return new BadRequestResult();
+        }
+        catch (Exception ex)
+        {
+            //log unhandled exception
+            return new StatusCodeResult(500);
+        }
     }
 }

@@ -1,4 +1,4 @@
-namespace Ensek.Net.MeterReading.Dtos;
+namespace Ensek.Net.MeterReading.Shared.Dtos;
 
 public class ImportFile
 {

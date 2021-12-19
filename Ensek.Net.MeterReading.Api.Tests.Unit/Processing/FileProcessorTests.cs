@@ -3,6 +3,15 @@ namespace Ensek.Net.MeterReading.Api.Tests.Unit;
 [ExcludeFromCodeCoverage]
 public class FileProcessorTests
 {
+    private readonly IFileProcessor _fileProcessor;
+    private readonly IAuditRepository _auditRepositoryFake;
+
+    public FileProcessorTests()
+    {
+        _auditRepositoryFake = A.Fake<IAuditRepository>();
+        _fileProcessor = new FileProcessor(_auditRepositoryFake);
+    }
+
     [Fact]
     public void FileProcessor_Implements_IFileProcessor()
     {
@@ -21,24 +30,20 @@ public class FileProcessorTests
     public void Process_WithValidThreeColumnCsvFileByteArray_CallsAuditRepositoryCreateNewAuditRecordOnce()
     {
         string filename = "test.csv";
-        var auditRepositoryFake = A.Fake<IAuditRepository>();
-        var fileProcessor = new FileProcessor(auditRepositoryFake);
         byte[] testMeterReadingFileContentBytes = Encoding.ASCII.GetBytes(Properties.Resources.TestMeterReadingFileContent);
-        A.CallTo(() => auditRepositoryFake.CreateNewAuditRecord(filename)).Returns(1);
+        A.CallTo(() => _auditRepositoryFake.CreateNewAuditRecord(filename)).Returns(1);
 
-        _ = fileProcessor.Process(filename, testMeterReadingFileContentBytes);
+        _ = _fileProcessor.Process(filename, testMeterReadingFileContentBytes);
 
-        A.CallTo(() => auditRepositoryFake.CreateNewAuditRecord(filename)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => _auditRepositoryFake.CreateNewAuditRecord(filename)).MustHaveHappenedOnceExactly();
     }
 
     [Fact]
     public void Process_WithValidThreeColumnCsvFileByteArray_ReturnsPopulatedImportFile()
     {
         string filename = "test.csv";
-        var auditRepositoryFake = A.Fake<IAuditRepository>();
-        var fileProcessor = new FileProcessor(auditRepositoryFake);
         byte[] testMeterReadingFileContentBytes = Encoding.ASCII.GetBytes(Properties.Resources.TestMeterReadingFileContent);
-        A.CallTo(() => auditRepositoryFake.CreateNewAuditRecord(filename)).Returns(1);
+        A.CallTo(() => _auditRepositoryFake.CreateNewAuditRecord(filename)).Returns(1);
         var importFileAudits = new List<ImportFileAudit> { 
             new ImportFileAudit("2344", "22/04/2019 09:24", "01002"),
             new ImportFileAudit("2346", "22/04/2019 12:25", "999999"),
@@ -51,22 +56,38 @@ public class FileProcessorTests
         };
         var expectedResponse = new ImportFile(importFileAudits) { AuditId = 1 };
 
-        var actualResponse = fileProcessor.Process(filename, testMeterReadingFileContentBytes);
+        var actualResponse = _fileProcessor.Process(filename, testMeterReadingFileContentBytes);
 
         expectedResponse.Should().BeEquivalentTo(actualResponse);
     }
 
     [Fact]
-    public void Process_WithInvalidTwoColumnCsvFileByteArray_ThrowsIndexOutOfRangeException()
+    public void Process_WithInvalidTwoColumnCsvFileByteArray_ThrowsFileProcessorException()
     {
         string filename = "test.csv";
-        var auditRepositoryFake = A.Fake<IAuditRepository>();
-        var fileProcessor = new FileProcessor(auditRepositoryFake);
         byte[] testMeterReadingFileContentBytes = Encoding.ASCII.GetBytes(Properties.Resources.InvalidTestMeterReadingFileContent);
-        A.CallTo(() => auditRepositoryFake.CreateNewAuditRecord(filename)).Returns(1);
+        A.CallTo(() => _auditRepositoryFake.CreateNewAuditRecord(filename)).Returns(1);
 
-        Action act = () => fileProcessor.Process(filename, testMeterReadingFileContentBytes);
+        Action act = () => _fileProcessor.Process(filename, testMeterReadingFileContentBytes);
 
-        act.Should().Throw<IndexOutOfRangeException>();
+        act.Should().Throw<FileProcessorException>();
+    }
+
+    [Fact]
+    public void Process_WithNullMeterReadingFileName_ThrowsFileProcessorException()
+    {
+        byte[] testMeterReadingFileContentBytes = Encoding.ASCII.GetBytes(Properties.Resources.InvalidTestMeterReadingFileContent);
+
+        Action act = () => _fileProcessor.Process(default(string)!, testMeterReadingFileContentBytes);
+
+        act.Should().Throw<FileProcessorException>();
+    }
+
+    [Fact]
+    public void Process_WithNullMeterReadingFileBytes_ThrowsFileProcessorException()
+    {
+        Action act = () => _fileProcessor.Process("test", new List<byte>().ToArray());
+
+        act.Should().Throw<FileProcessorException>();
     }
 }

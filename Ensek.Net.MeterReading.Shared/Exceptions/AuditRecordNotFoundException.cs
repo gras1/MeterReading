@@ -1,5 +1,6 @@
-namespace Ensek.Net.MeterReading.Data;
+namespace Ensek.Net.MeterReading.Shared.Exceptions;
 
+[ExcludeFromCodeCoverage]
 public class AuditRecordNotFoundException : Exception
 {
     public AuditRecordNotFoundException()

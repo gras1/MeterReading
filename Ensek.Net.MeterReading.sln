@@ -1,29 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ensek.Net.MeterReading.DbSetup", "Ensek.Net.MeterReading.DbSetup\Ensek.Net.MeterReading.DbSetup.csproj", "{99DFFD54-D2C6-4253-BA11-A95BFB6D53FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ensek.Net.MeterReading.DbSetup", "Ensek.Net.MeterReading.DbSetup\Ensek.Net.MeterReading.DbSetup.csproj", "{99DFFD54-D2C6-4253-BA11-A95BFB6D53FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ensek.Net.MeterReading.Data", "Ensek.Net.MeterReading.Data\Ensek.Net.MeterReading.Data.csproj", "{82A816F6-D086-40D0-8FE0-C2320BD8AAF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ensek.Net.MeterReading.Data", "Ensek.Net.MeterReading.Data\Ensek.Net.MeterReading.Data.csproj", "{82A816F6-D086-40D0-8FE0-C2320BD8AAF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ensek.Net.MeterReading.Data.Tests.Unit", "Ensek.Net.MeterReading.Data.Tests.Unit\Ensek.Net.MeterReading.Data.Tests.Unit.csproj", "{13F1F18D-A78F-4A42-BF4C-B654DDCF5567}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ensek.Net.MeterReading.Data.Tests.Unit", "Ensek.Net.MeterReading.Data.Tests.Unit\Ensek.Net.MeterReading.Data.Tests.Unit.csproj", "{13F1F18D-A78F-4A42-BF4C-B654DDCF5567}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ensek.Net.MeterReading.Dtos", "Ensek.Net.MeterReading.Dtos\Ensek.Net.MeterReading.Dtos.csproj", "{F936FD59-E3B0-444D-BC76-84B9530506E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ensek.Net.MeterReading.Api", "Ensek.Net.MeterReading.Api\Ensek.Net.MeterReading.Api.csproj", "{DDB0DB4D-A518-47BA-982F-FEC000F53A49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ensek.Net.MeterReading.Api", "Ensek.Net.MeterReading.Api\Ensek.Net.MeterReading.Api.csproj", "{DDB0DB4D-A518-47BA-982F-FEC000F53A49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ensek.Net.MeterReading.Api.Tests.Unit", "Ensek.Net.MeterReading.Api.Tests.Unit\Ensek.Net.MeterReading.Api.Tests.Unit.csproj", "{3EF6869D-F0E3-4F6F-9BAF-318484E9AF1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ensek.Net.MeterReading.Api.Tests.Unit", "Ensek.Net.MeterReading.Api.Tests.Unit\Ensek.Net.MeterReading.Api.Tests.Unit.csproj", "{3EF6869D-F0E3-4F6F-9BAF-318484E9AF1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ensek.Net.MeterReading.Api.Tests.Integration", "Ensek.Net.MeterReading.Api.Tests.Integration\Ensek.Net.MeterReading.Api.Tests.Integration.csproj", "{A77D37AC-084D-47AF-A23E-8A7CFDA742FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ensek.Net.MeterReading.Api.Tests.Integration", "Ensek.Net.MeterReading.Api.Tests.Integration\Ensek.Net.MeterReading.Api.Tests.Integration.csproj", "{A77D37AC-084D-47AF-A23E-8A7CFDA742FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ensek.Net.MeterReading.Shared", "Ensek.Net.MeterReading.Shared\Ensek.Net.MeterReading.Shared.csproj", "{F464BDF8-1A9B-48E1-843A-021CE424CF70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{99DFFD54-D2C6-4253-BA11-A95BFB6D53FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -38,10 +35,6 @@ Global
 		{13F1F18D-A78F-4A42-BF4C-B654DDCF5567}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13F1F18D-A78F-4A42-BF4C-B654DDCF5567}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13F1F18D-A78F-4A42-BF4C-B654DDCF5567}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F936FD59-E3B0-444D-BC76-84B9530506E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F936FD59-E3B0-444D-BC76-84B9530506E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F936FD59-E3B0-444D-BC76-84B9530506E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F936FD59-E3B0-444D-BC76-84B9530506E8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DDB0DB4D-A518-47BA-982F-FEC000F53A49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DDB0DB4D-A518-47BA-982F-FEC000F53A49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDB0DB4D-A518-47BA-982F-FEC000F53A49}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -54,5 +47,15 @@ Global
 		{A77D37AC-084D-47AF-A23E-8A7CFDA742FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A77D37AC-084D-47AF-A23E-8A7CFDA742FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A77D37AC-084D-47AF-A23E-8A7CFDA742FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F464BDF8-1A9B-48E1-843A-021CE424CF70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F464BDF8-1A9B-48E1-843A-021CE424CF70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F464BDF8-1A9B-48E1-843A-021CE424CF70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F464BDF8-1A9B-48E1-843A-021CE424CF70}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {39755F73-32E0-4A13-8D78-A3D735C8C5F0}
 	EndGlobalSection
 EndGlobal

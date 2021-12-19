@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ensek.Net.MeterReading.Dtos\Ensek.Net.MeterReading.Dtos.csproj" />
+    <ProjectReference Include="..\Ensek.Net.MeterReading.Shared\Ensek.Net.MeterReading.Shared.csproj" />
   </ItemGroup>
 
 </Project>

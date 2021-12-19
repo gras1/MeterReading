@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ensek.Net.MeterReading.Api\Ensek.Net.MeterReading.Api.csproj" />
-    <ProjectReference Include="..\Ensek.Net.MeterReading.Dtos\Ensek.Net.MeterReading.Dtos.csproj" />
     <ProjectReference Include="..\Ensek.Net.MeterReading.Data\Ensek.Net.MeterReading.Data.csproj" />
   </ItemGroup>
 
