@@ -91,12 +91,10 @@ NB: I realised after the commit 1am 15/12/2021 that I would have to be creative 
 
 26. Originally, the Process method of FileProcessor took a single parameter of a FileStream but this proved a nightmare to test so I altered this method to accept two parameters, the file name and the byte array repesentation of the cs file
 
-27. Restructed the solution removing the Dtos class library project and adding a Shared class library project. I created Dtos, Exceptions and Extensions folders and moved those classes in to the folders.
+27. Restructured the solution removing the Dtos class library project and adding a Shared class library project. I created Dtos, Exceptions and Extensions folders and moved those classes in to the folders.
+
+28. Restructured the file validators so that the dependency injection creates an IEnumerable of IValidator which the API controller method calls
 
 //TODO:
-//Unit test MeterReadingFileUploadController
-//Add Dependency Injection
-//Check code coverage
-//Check swagger documentation
 //Add Api integration tests?
-//Somke tests using Postman?
+//Logging unhandled exceptions

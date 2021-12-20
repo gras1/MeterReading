@@ -1,7 +1,6 @@
 global using System;
 global using Xunit;
 global using FluentAssertions;
-global using Microsoft.Extensions.Options;
 global using FakeItEasy;
 global using System.Diagnostics.CodeAnalysis;
 global using Ensek.Net.MeterReading.Api.Controllers;
@@ -18,3 +17,5 @@ global using System.IO;
 global using System.Threading.Tasks;
 global using Ensek.Net.MeterReading.Api.Models;
 global using Microsoft.AspNetCore.Mvc;
+global using Ensek.Net.MeterReading.Api.MeterReadingFileValidators;
+global using System.Linq;
