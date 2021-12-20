@@ -1,0 +1,12 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "DatabaseOptions": {
+    "ConnectionString": "Data Source=C:\\Projects\\Training\\MeterReading\\Ensek.Net.MeterReading.Data\\MeterReadings.db"
+  }
+}

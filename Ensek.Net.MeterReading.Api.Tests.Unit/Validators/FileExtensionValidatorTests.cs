@@ -1,5 +1,6 @@
 namespace Ensek.Net.MeterReading.Api.Tests.Unit.Validators;
 
+[ExcludeFromCodeCoverage]
 public class FileExtensionValidatorTests
 {
     [Fact]

@@ -28,7 +28,6 @@ builder.Services.AddScoped<IValidator, NullValidator>();
 builder.Services.AddScoped<IValidator, ZeroFileSizeValidator>();
 builder.Services.AddScoped<IValidator, MaxFileSizeValidator>();
 builder.Services.AddScoped<IValidator, FileExtensionValidator>();
-builder.Services.AddScoped<IValidator, ContentTypeValidator>();
 builder.Services.AddScoped<IValidator, FileSignatureValidator>();
 
 builder.Services.AddCors(options =>
@@ -48,7 +47,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseCors("Open");
 
@@ -57,3 +56,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

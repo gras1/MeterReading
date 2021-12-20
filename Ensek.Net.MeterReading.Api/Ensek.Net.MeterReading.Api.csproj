@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Ensek.Net.MeterReading.Shared\Ensek.Net.MeterReading.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+      <InternalsVisibleTo Include="Ensek.Net.MeterReading.Api.Tests.Integration" />
+  </ItemGroup>
+
 </Project>

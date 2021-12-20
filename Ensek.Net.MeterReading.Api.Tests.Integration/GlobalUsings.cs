@@ -1,0 +1,15 @@
+global using Xunit;
+global using System;
+global using FluentAssertions;
+global using System.Threading.Tasks;
+global using Microsoft.AspNetCore.Mvc.Testing;
+global using System.IO;
+global using System.Net.Http;
+global using System.Text.Json;
+global using Ensek.Net.MeterReading.Api.Models;
+global using Microsoft.Data.Sqlite;
+global using System.Net.Http.Headers;
+global using Microsoft.AspNetCore.TestHost;
+global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.Extensions.Configuration;
+global using System.Diagnostics.CodeAnalysis;
