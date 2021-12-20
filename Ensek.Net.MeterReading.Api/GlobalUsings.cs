@@ -16,3 +16,4 @@ global using System.Data;
 global using Microsoft.Data.Sqlite;
 global using Ensek.Net.MeterReading.Api.MeterReadingFileValidators;
 global using System.Reflection;
+global using System.Text.Json.Serialization;

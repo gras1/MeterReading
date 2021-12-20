@@ -81,11 +81,15 @@ public class MeterReadingFileUploadControllerTests : IDisposable
     [Fact]
     public async Task MeterReadingUploads()
     {
-        var expectedMeterReadingFileUploadResponse = new MeterReadingFileUploadResponse();
+        var expectedMeterReadingFileUploadResponse = new MeterReadingFileUploadResponse {
+            ImportFailureReasons = new List<Shared.Dtos.ImportFileAudit>(),
+            NumberOfRecordsFailedToImport = 0,
+            NumberOfRecordsSuccessfullyImported = 3
+        };
         string path = Directory.GetCurrentDirectory();
         string testFilePath = path + "\\Test_Meter_Readings.csv";
         var content = new MultipartFormDataContent();
-        var file_content = new ByteArrayContent(System.IO.File.ReadAllBytes(testFilePath));
+        var file_content = new ByteArrayContent(File.ReadAllBytes(testFilePath));
         file_content.Headers.ContentType = new MediaTypeHeaderValue("text/csv");
         file_content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
         {
