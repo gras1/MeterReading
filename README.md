@@ -19,3 +19,4 @@ After cloning the repo, to get started:
 4. in a Terminal window cd in to the Ensek.Net.MeterReading.Api project folder and type 'dotnet run', then in a browser go to http://localhost:5139/index.html. This presents the swagger window. Click the 'Try it out' button, select the Meter_Reading.csv file, untick the 'Send empty value' option and click the 'Execute' button. Once it has successfully run, take a look at the response body and it should provide a full breakdown of import with full details of the records that didn't validate correctly or failed to import in to the database.
 
 *NB:* ensure the meter reading csv file uploaded is saved as either UTF7 or UTF8 encoding
+*NB:* make sure that DBSetup project is run before running the integration test
