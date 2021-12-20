@@ -79,7 +79,7 @@ public class MeterReadingFileUploadControllerTests : IDisposable
     }
 
     [Fact]
-    public async Task MeterReadingUploads()
+    public async Task MeterReadingUploads_WithValidCsvFile_ReturnsPopulatedMeterReadingFileUploadResponse()
     {
         var expectedMeterReadingFileUploadResponse = new MeterReadingFileUploadResponse {
             ImportFailureReasons = new List<Shared.Dtos.ImportFileAudit>(),

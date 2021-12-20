@@ -98,5 +98,4 @@ NB: I realised after the commit 1am 15/12/2021 that I would have to be creative 
 29. To implement the api integration tests, specify the Web SDK in the Ensek.Net.MeterReading.Api.Tests.Integration project file (<Project Sdk="Microsoft.NET.Sdk.Web">).
 
 //TODO:
-//Add Api integration tests?
 //Logging unhandled exceptions
