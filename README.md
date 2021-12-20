@@ -14,9 +14,11 @@ After cloning the repo, to get started:
 
 2. in a Terminal window cd in to the Ensek.Net.MeterReading.DbSetup project folder and type 'dotnet run' - this will create the Sqlite database in the root of that folder called MeterReadings.db and populate it with the contents of the Test_Accounts.csv file
 
-3. edit the appsettings.json file in the Ensek.Net.MeterReading.Api project folder and change the folder location path to MeterReadings.db to suit your setup and operating system
+3. edit the appsettings.json file in the Ensek.Net.MeterReading.Api project folder and change the folder location path to the MeterReadings.db in the Ensek.Net.MeterReading.Data to suit your setup and operating system
 
-4. in a Terminal window cd in to the Ensek.Net.MeterReading.Api project folder and type 'dotnet run', then in a browser go to http://localhost:5139/index.html. This presents the swagger window. Click the 'Try it out' button, select the Meter_Reading.csv file, untick the 'Send empty value' option and click the 'Execute' button. Once it has successfully run, take a look at the response body and it should provide a full breakdown of import with full details of the records that didn't validate correctly or failed to import in to the database.
+4. edit the testsettings.json file in the Ensek.Net.MeterReading.Api.Tests.Integration project folder and change the folder location path to MeterReadings.db in the Ensek.Net.MeterReading.Data to suit your setup and operating system
+
+5. in a Terminal window cd in to the Ensek.Net.MeterReading.Api project folder and type 'dotnet run', then in a browser go to http://localhost:5139/index.html. This presents the swagger window. Click the 'Try it out' button, select the Meter_Reading.csv file, untick the 'Send empty value' option and click the 'Execute' button. Once it has successfully run, take a look at the response body and it should provide a full breakdown of import with full details of the records that didn't validate correctly or failed to import in to the database.
 
 *NB:* ensure the meter reading csv file uploaded is saved as either UTF7 or UTF8 encoding
 *NB:* make sure that DBSetup project is run before running the integration test
