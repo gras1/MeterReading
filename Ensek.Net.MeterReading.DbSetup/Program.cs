@@ -21,9 +21,8 @@ class Program
     private static void PopulateAccountsTable(string connectionString)
     {
         var accounts = new List<Account>();
-        string path = @"C:\Projects\Training\MeterReading\Test_Accounts.csv";
 
-        using var fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+        using var fs = new FileStream("../Test_Accounts.csv", FileMode.Open, FileAccess.Read);
         using var sr = new StreamReader(fs, Encoding.UTF8);
 
         while (!sr.EndOfStream)

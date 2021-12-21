@@ -12,7 +12,11 @@ Two parts to this technical task:-
 After cloning the repo, to get started:
 1. ensure you have the .NET 6 SDK installed on your computer
 
-2. in a Terminal window cd in to the Ensek.Net.MeterReading.DbSetup project folder and type 'dotnet run' - this will create the Sqlite database in the root of that folder called MeterReadings.db and populate it with the contents of the Test_Accounts.csv file
+2. clone the repo: https://github.com/gras1/meterreading
+
+3. in a Terminal window cd in to the MeterReading root folder and type 'dotnet build' - this will install the nuget packages and compile the projects
+
+4. in a Terminal window cd in to the Ensek.Net.MeterReading.DbSetup project folder and type 'dotnet run' - this will create the Sqlite database in the root of that folder called MeterReadings.db and populate it with the contents of the Test_Accounts.csv file
 
 3. edit the appsettings.json file in the Ensek.Net.MeterReading.Api project folder and change the folder location path to MeterReadings.db to suit your setup and operating system
 

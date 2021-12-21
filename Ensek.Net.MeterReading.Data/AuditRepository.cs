@@ -62,7 +62,7 @@ public class AuditRepository : IAuditRepository
         var auditIdCount = 0;
         while (reader.Read())
         {
-            Int32.TryParse(Convert.ToString(reader[0]), out auditIdCount);
+            int.TryParse(Convert.ToString(reader[0]), out auditIdCount);
         }
         selectCmd.Dispose();
         if (auditIdCount < 1)
